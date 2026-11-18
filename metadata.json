@@ -1,0 +1,6 @@
+{
+  "name": "YourRatio",
+  "description": "Friendly interactive learning app for understanding ratio and proportion through recipes and maps.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

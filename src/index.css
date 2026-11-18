@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --yr-purple: #795BFF;
+    --yr-purple-hover: #6444F2;
+    --yr-purple-light: #B9A9FF;
+    --yr-purple-soft: #F1EDFF;
+    --yr-cyan: #42C5E8;
+    --yr-cyan-soft: #E9F9FD;
+    --yr-yellow: #FFD83D;
+    --yr-yellow-soft: #FFF8DB;
+    --yr-bg: #F7F9FF;
+    --yr-card: #FFFFFF;
+    --yr-text: #46546A;
+    --yr-text-muted: #7C879C;
+    --yr-lavender-text: #8B7CE8;
+    --yr-border: #EEF0F5;
+    --yr-success: #24A16B;
+    --yr-success-soft: #EAF9F2;
+    --yr-error: #D9536F;
+    --yr-error-soft: #FDF0F3;
+  }
+
+  html {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--yr-bg);
+    color: var(--yr-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--yr-bg);
+    color: var(--yr-text);
+    min-height: 100vh;
+  }
+
+  .font-mono-math {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.yr-card {
+  background: #FFFFFF;
+  border: 1px solid #EEF0F5;
+  box-shadow: 0 6px 24px -6px rgba(121, 91, 255, 0.08), 0 2px 6px -1px rgba(70, 84, 106, 0.04);
+}
+
+.yr-btn-primary {
+  background-color: #795BFF;
+  color: #FFFFFF;
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.yr-btn-primary:hover:not(:disabled) {
+  background-color: #6444F2;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -4px rgba(121, 91, 255, 0.35);
+}
+
+.yr-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.yr-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

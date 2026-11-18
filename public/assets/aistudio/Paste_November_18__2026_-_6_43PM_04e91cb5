@@ -1,0 +1,1295 @@
+# MASTER IMPLEMENTATION PROMPT: YourRatio
+## Adaptive Intelligent Tutoring System
+
+Build a complete, functional, adaptive learning web application named **YourRatio**.
+
+YourRatio is an Intelligent Tutoring System (ITS) designed to teach ratio and proportion through real-world examples involving recipes and maps. The application must adapt to the learner's knowledge, identify misconceptions, generate questions automatically, provide scaffolded remediation, and maintain learning progress.
+
+This is not a static educational website or a simple question-and-answer chatbot. It must function as an actual adaptive tutoring system with a Domain Model, Learner Model, Pedagogical Model, and User Interface.
+
+**IMPORTANT: Strictly follow the provided DESIGN.md and System Design Report. Do not ignore, simplify, or replace their educational and technical requirements.**
+
+---
+
+# 1. PROJECT IDENTITY AND CONSTRAINTS
+
+**Application Name:** YourRatio  
+**Learner ID:** 25M1025  
+**Problem:** Adaptive tutor with automatic question generation (P4)  
+**Learning Topic:** Ratio and proportion in recipes and maps (T5)  
+**Learner Profile:** Learner repeating the topic after failing it once, with high anxiety and low self-efficacy (L5).
+
+### Primary Design Constraint: 10-Minute Sessions
+
+This is a mandatory requirement.
+
+- Every complete learning sequence must fit within approximately 10 minutes.
+- Divide the learning experience into short, manageable activities.
+- The learner must be able to stop at any point.
+- Save progress automatically after every meaningful interaction.
+- When the learner returns, resume from exactly where they left off.
+- Do not force the learner to restart a completed activity.
+- Display session progress and elapsed time.
+- Avoid unnecessarily lengthy explanations, quizzes, and interactions.
+
+The experience should feel manageable, supportive, and achievable.
+
+Do not make the application specific to Class 7 or hardcode a particular grade level. Follow the supplied syllabus for the actual curriculum, topic hierarchy, terminology, and learning progression.
+
+---
+
+# 2. VISUAL DESIGN AND UI REQUIREMENTS
+
+Use the uploaded YourRatio reference screenshots as the primary visual reference.
+
+The design should closely follow the visual appearance of RatioBuddy shown in the screenshots. Do not introduce a completely different design system.
+
+### 2.1 Colour Palette
+
+Use a soft, friendly, educational colour palette.
+
+- Primary purple: #795BFF
+- Light purple: #B9A9FF
+- Cyan accent: #42C5E8
+- Yellow accent: #FFD83D
+- Main background: #F7F9FF
+- Card background: #FFFFFF
+- Primary text: #46546A
+- Secondary text: #AFA3F7
+- Borders: #EEF0F5
+- Error accent: Soft red
+- Success accent: Soft green
+
+Use purple for primary headings, buttons, active states, progress indicators, and important interface elements.
+
+Use cyan for secondary visual elements and educational illustrations.
+
+Use yellow for stars, achievement indicators, profile accents, and highlights.
+
+Avoid excessive colours, dark backgrounds, harsh contrasts, and unnecessary gradients.
+
+### 2.2 Typography
+
+Use a rounded, modern sans-serif font similar to the reference screenshots.
+
+Prefer **Poppins** or a visually similar rounded font.
+
+Typography requirements:
+
+- Large, bold purple headings.
+- Medium-weight section headings.
+- Readable body text.
+- Soft lavender secondary text.
+- Clear mathematical expressions.
+- Consistent spacing and line height.
+- Comfortable font sizes for mobile and desktop.
+
+Mathematical expressions, ratios, fractions, and calculations must be displayed clearly.
+
+### 2.3 UI Components
+
+Use:
+
+- White rounded cards.
+- Large rounded corners.
+- Soft shadows.
+- Light borders.
+- Rounded purple buttons.
+- Horizontal progress bars.
+- Small pill-shaped status labels.
+- Friendly educational illustrations.
+- Smooth and subtle transitions.
+- Clear hover and selected states.
+
+The application must be responsive and work properly on desktop, tablet, and mobile.
+
+### 2.4 Global Header
+
+Implement a consistent header throughout the application.
+
+Header layout:
+
+**Left:**
+- Purple rounded-square graduation cap icon.
+- Application name: YourRatio.
+- Use purple and cyan styling for the brand name.
+
+**Right:**
+- Dashboard navigation.
+- Profile indicator with a yellow circular icon.
+- Current learner level.
+- Small mastery progress indicator.
+- Logout icon.
+
+Keep the header white with a subtle bottom shadow or border.
+
+The header should remain consistent across all primary learning screens.
+
+### 2.5 Global Footer
+
+Display the following learner identification in the footer of every application screen:
+
+**Learner ID: 25M1025**
+
+Also include:
+
+- YourRatio branding.
+- A short educational platform description.
+- About section.
+- Learning progress information where appropriate.
+
+Do not display the learner ID as a large heading. Keep it subtle and consistent.
+
+---
+
+# 3. SYSTEM ARCHITECTURE
+
+Implement the application using the classical four-component Intelligent Tutoring System architecture.
+
+The four components must work together.
+
+### A. Domain Model
+
+Responsible for:
+
+- Curriculum structure.
+- Chapters.
+- Knowledge Components (KCs).
+- Topics.
+- Questions.
+- Learning resources.
+- Difficulty classifications.
+- Misconception mappings.
+
+Follow this hierarchy:
+
+Chapter → Knowledge Component → Topic → Question.
+
+Use the syllabus as the source of truth.
+
+Do not invent additional syllabus topics or change their order.
+
+Each KC must contain the relevant topics, instructional material, and assessment questions.
+
+### B. Learner Model
+
+Maintain a learner-specific model containing:
+
+- Mastery probability.
+- Correct and incorrect answers.
+- Total attempts.
+- Hint usage.
+- Time spent.
+- Consecutive errors.
+- Identified misconceptions.
+- Difficulty progression.
+- Topic completion.
+- Session history.
+- Learning stage.
+- Current activity and resume position.
+
+Use Bayesian Knowledge Tracing (BKT) as the primary mastery estimation mechanism.
+
+### C. Pedagogical Model
+
+Responsible for:
+
+- Adaptive question selection.
+- Dynamic difficulty adjustment.
+- Misconception detection.
+- Scaffolded remediation.
+- Intelligent hints.
+- Struggle detection.
+- Learning interventions.
+- Mastery-based progression.
+
+### D. User Interface
+
+Responsible for:
+
+- Instructional sequencing.
+- Interactive learning content.
+- Question presentation.
+- Feedback.
+- Progress tracking.
+- Resume functionality.
+- Session management.
+- Log collection.
+
+The four components must operate as a single adaptive learning system.
+
+---
+
+# 4. CONTENT STRUCTURE AND SYLLABUS
+
+Strictly follow the supplied syllabus.
+
+The syllabus must determine:
+
+- Chapter structure.
+- Knowledge Components.
+- Topic names.
+- Learning objectives.
+- Concept explanations.
+- Question coverage.
+- Learning sequence.
+
+Use the following hierarchy:
+
+Chapter → KC → Topic → Question.
+
+The System Design Report specifies eight sequential Knowledge Components. Preserve their structure and ordering wherever they are part of the supplied curriculum.
+
+The instructional content for the selected learning context must focus on:
+
+**Ratio and proportion in recipes and maps.**
+
+Cover the following concepts as appropriate to the syllabus:
+
+1. Understanding ratios.
+2. Writing ratios in different forms.
+3. Simplifying ratios.
+4. Equivalent ratios.
+5. Understanding proportions.
+6. Solving missing-value problems.
+7. Scaling recipe ingredients.
+8. Understanding map scales.
+9. Calculating actual distances using map scales.
+10. Applying ratio and proportion to practical situations.
+
+Do not force all these concepts into a single 10-minute session. Divide them into manageable topics and activities according to the syllabus.
+
+Do not unlock the next KC until the learner reaches the required mastery threshold.
+
+---
+
+# 5. FIVE-STAGE INSTRUCTIONAL DESIGN
+
+Every topic must follow the five-stage instructional sequence.
+
+The stages must be visually clear and properly gated.
+
+## Stage 1: Hook
+
+Introduce the concept through a relatable real-world situation.
+
+Examples:
+
+- Preparing a recipe for more people.
+- Comparing quantities of ingredients.
+- Understanding distances on a map.
+
+Start with an engaging question or situation.
+
+Use encouraging language such as:
+
+"Have you ever wondered how to adjust a recipe when more people are coming?"
+
+The objective is to activate prior knowledge and reduce anxiety.
+
+## Stage 2: Exploration
+
+Display visual learning resources.
+
+Include:
+
+- Exploration images.
+- Illustrations.
+- Visual examples.
+- Concept videos, where available.
+
+Require an explicit acknowledgment before allowing the learner to proceed.
+
+Do not allow learners to skip the exploration stage.
+
+The content should use visual and verbal explanations together.
+
+## Stage 3: Explanation + Quick Check
+
+Present the formal concept explanation.
+
+For example:
+
+A ratio compares two quantities.
+
+If a recipe requires 2 cups of flour and 1 cup of sugar, the ratio of flour to sugar is 2:1.
+
+A proportion means that two ratios are equal.
+
+If the recipe is doubled, the new quantities become 4 cups of flour and 2 cups of sugar. The ratio remains unchanged.
+
+For map scales:
+
+If 1 cm on a map represents 5 km in real life, 3 cm represents 15 km.
+
+After the explanation, present one gatekeeper MCQ.
+
+The learner must answer correctly before continuing.
+
+This quick check is formative, not a scored examination.
+
+## Stage 4: Story
+
+Present a real-world application of the concept.
+
+Use recipes and maps as the primary contexts.
+
+Example:
+
+"Riya is preparing lemonade for four people. The original recipe uses 2 lemons and 3 glasses of water. How should she adjust the quantities for eight people?"
+
+Or:
+
+"A map shows that 1 cm represents 5 km. Two towns are 4 cm apart on the map. What is their actual distance?"
+
+Use illustrations and visual representations wherever possible.
+
+## Stage 5: Practice
+
+Start the adaptive assessment loop.
+
+This stage must include automatically generated questions, adaptive difficulty, hints, diagnostic feedback, and scaffolded remediation.
+
+The learner must not receive a fixed sequence of identical questions.
+
+---
+
+# 6. AUTOMATIC QUIZ AND QUESTION GENERATION
+
+This is one of the most important features.
+
+Implement an automatic quiz-generation system that creates questions dynamically based on:
+
+- Current Knowledge Component.
+- Current topic.
+- Learning objectives.
+- Current mastery probability.
+- Previous answers.
+- Detected misconceptions.
+- Current difficulty level.
+- Hint dependency.
+- Previous question history.
+
+Do not simply display a fixed list of predefined questions.
+
+### 6.1 Question Types
+
+The question generator must support:
+
+**1. Multiple Choice Questions**
+
+Provide four options.
+
+Each incorrect option must have an associated misconception ID wherever applicable.
+
+**2. Fill in the Blanks**
+
+Example:
+
+If 3:4 = 6:____, find the missing number.
+
+**3. Numerical Questions**
+
+Example:
+
+A recipe uses 2 cups of flour for 1 cup of sugar. Calculate the quantities required when the recipe is tripled.
+
+**4. Real-World Application Questions**
+
+Example:
+
+A map uses a scale of 1 cm = 5 km. Calculate the actual distance represented by 6 cm.
+
+**5. Reasoning Questions**
+
+Example:
+
+Why must both ingredients be multiplied by the same factor when doubling a recipe?
+
+### 6.2 Automatic Question Generation Rules
+
+Each generated question must include:
+
+- Unique question ID.
+- Knowledge Component ID.
+- Topic ID.
+- Question text.
+- Question type.
+- Difficulty level.
+- Correct answer.
+- Explanation.
+- Three levels of hints.
+- Associated misconception IDs.
+- Bug severity.
+- Remediation question, if applicable.
+
+Generate questions using the syllabus and current topic as constraints.
+
+Questions must be mathematically correct.
+
+For numerical questions, independently validate the answer using deterministic mathematical logic before displaying it.
+
+Do not allow the AI to generate ambiguous questions, duplicate questions unnecessarily, or provide incorrect answer keys.
+
+Use a question-generation prompt that restricts the AI to the current syllabus topic.
+
+If the AI service fails, display validated fallback questions.
+
+### 6.3 Adaptive Quiz Generation
+
+Difficulty must depend on the learner's current mastery.
+
+**Easy:**
+- Direct ratio identification.
+- Basic simplification.
+- Single-step calculations.
+
+**Medium:**
+- Equivalent ratios.
+- Missing values.
+- Recipe scaling.
+- Basic map-scale calculations.
+
+**Hard:**
+- Multi-step proportion problems.
+- Complex recipe adjustments.
+- Combined unit conversion and map-scale calculations.
+- Real-world reasoning problems.
+
+The application must generate questions at the appropriate difficulty rather than repeatedly serving questions at the same level.
+
+---
+
+# 7. LEARNER MODEL AND BAYESIAN KNOWLEDGE TRACING
+
+Implement Bayesian Knowledge Tracing independently for every Knowledge Component.
+
+Use the following initial parameters:
+
+| Parameter | Symbol | Value |
+|---|---|---|
+| Initial Knowledge | P(L₀) | 0.15 |
+| Learning Rate | P(T) | 0.15 |
+| Guess Rate | P(G) | 0.20 |
+| Slip Rate | P(S) | 0.10 |
+
+Initialize each KC with:
+
+P(L₀) = 0.15.
+
+Use the standard BKT update process.
+
+For a correct response:
+
+P(L \| Correct) = P(L)(1-P(S)) / [P(L)(1-P(S)) + (1-P(L))P(G)]
+
+For an incorrect response:
+
+P(L \| Incorrect) = P(L)P(S) / [P(L)P(S) + (1-P(L))(1-P(G))]
+
+After calculating the posterior:
+
+P(L new) = P(L posterior) + (1-P(L posterior))P(T)
+
+### Mastery Threshold
+
+The learner must reach:
+
+**P(L) ≥ 0.80**
+
+before progressing to the next KC or completing the current mastery requirement.
+
+Maintain separate mastery probabilities for each KC.
+
+Do not update unrelated KCs when a learner answers a question.
+
+### Hint-Based Mastery Adjustment
+
+Hint usage must influence mastery updates.
+
+- No hints: Full mastery credit.
+- General hint: Slightly reduced mastery credit.
+- Strategic hint: Moderately reduced mastery credit.
+- Bottom-out hint: Significantly reduced mastery credit.
+
+A learner must eventually demonstrate independent understanding to reach mastery.
+
+Implement hint modulation consistently and document the chosen adjustment factors.
+
+---
+
+# 8. ADAPTIVE PEDAGOGICAL LOGIC
+
+## 8.1 Dynamic Difficulty Adjustment
+
+Use the following difficulty mapping:
+
+| Mastery Probability | Difficulty |
+|---|---|
+| P(L) < 0.40 | Easy |
+| 0.40 ≤ P(L) < 0.70 | Medium |
+| P(L) ≥ 0.70 | Hard |
+
+### Two-Error Safety Net
+
+If the learner answers two consecutive questions incorrectly:
+
+- Immediately reduce the difficulty to Easy.
+- Provide encouraging feedback.
+- Identify the likely conceptual gap.
+- Avoid presenting another difficult question immediately.
+
+This override must apply even when the learner's historical mastery probability is high.
+
+## 8.2 Scaffolded Remediation
+
+When a learner answers incorrectly, do not immediately reveal the correct answer.
+
+Activate a remediation sequence when the error indicates a conceptual misconception or when the remediation rules are triggered.
+
+The remediation sequence must include:
+
+1. Identify the likely misconception.
+2. Display targeted feedback.
+3. Present a simpler question isolating the problematic sub-skill.
+4. Display remedial images or a visual explanation.
+5. Require a correct answer to the scaffolded question.
+6. Return the learner to the main adaptive assessment loop.
+
+Do not allow the learner to bypass the remediation question.
+
+### Example: Recipe Misconception
+
+Question:
+
+A recipe uses 2 cups of flour and 1 cup of sugar. What happens when the recipe is doubled?
+
+If the learner changes only the flour quantity:
+
+Explain:
+
+"When we double a recipe, we must multiply both ingredients by the same number. Otherwise, the taste and proportion of the recipe will change."
+
+Display:
+
+Original recipe:
+- Flour: 2 cups.
+- Sugar: 1 cup.
+
+Doubled recipe:
+- Flour: 4 cups.
+- Sugar: 2 cups.
+
+Then generate a simpler follow-up question.
+
+### Example: Map-Scale Misconception
+
+If the learner incorrectly adds or interprets the scale:
+
+Explain that every 1 cm represents a fixed actual distance.
+
+Use repeated groups or a visual number line before generating another question.
+
+## 8.3 Three-Error Struggle Detection
+
+Track consecutive incorrect answers.
+
+If the learner fails three consecutive questions, trigger a mandatory intervention.
+
+Display a supportive modal:
+
+"Let's review this together!"
+
+The system must:
+
+- Pause the adaptive practice loop.
+- Preserve all progress.
+- Redirect the learner to the Explanation Stage.
+- Revisit the relevant concept.
+- Re-present the concept video where available.
+- Allow practice to resume after the review.
+
+Do not reset the learner's mastery or completed activities.
+
+## 8.4 Diagnostic Bug Mapping
+
+Maintain a Bug Library.
+
+Every incorrect MCQ option should map to a specific misconception ID.
+
+Examples:
+
+- Comparing quantities without converting units.
+- Changing only one ingredient while scaling a recipe.
+- Confusing equivalent ratios.
+- Treating map-scale numbers as ordinary addition.
+- Incorrect multiplication or division.
+- Reversing the order of a ratio.
+
+Classify misconceptions by severity.
+
+**High Severity:**
+Fundamental conceptual misunderstanding. Trigger targeted remediation.
+
+**Low Severity:**
+Arithmetic mistakes or careless errors. Provide corrective feedback without necessarily triggering the full remediation sequence.
+
+Use the actual learner response to identify misconceptions. Do not assign a misconception merely because the answer is incorrect.
+
+---
+
+# 9. INTELLIGENT THREE-LEVEL HINT SYSTEM
+
+Every adaptive question must have three levels of hints.
+
+**Level 1: General Hint**
+
+Provide a conceptual nudge.
+
+Example:
+
+"Think about what happens to both ingredients when you increase the recipe."
+
+**Level 2: Strategic Hint**
+
+Suggest the relevant operation or formula.
+
+Example:
+
+"Try multiplying both quantities by the same factor."
+
+**Level 3: Bottom-Out Hint**
+
+Provide a step-by-step breakdown of the problem.
+
+Example:
+
+"First multiply 2 cups of flour by 2. Then multiply 1 cup of sugar by 2."
+
+Do not reveal the final answer before the learner has an opportunity to attempt the problem.
+
+Track:
+
+- Which hint was requested.
+- Number of hints used.
+- Time before requesting the hint.
+- Whether the answer was correct after the hint.
+
+Use this information in mastery estimation and learner analytics.
+
+---
+
+# 10. APPLICATION SCREENS AND USER FLOW
+
+Implement the following screens.
+
+## Screen 1: Welcome / Login
+
+Create a friendly welcome experience.
+
+Display:
+
+- YourRatio logo.
+- Short introduction.
+- Reassuring message.
+- Login option.
+- Learner ID.
+
+Use a friendly message:
+
+"Learning takes practice. Let's understand ratios one step at a time!"
+
+Do not use intimidating language or high-pressure messaging.
+
+## Screen 2: Dashboard
+
+This is the primary landing page after login.
+
+Follow the first reference screenshot closely.
+
+Include:
+
+**Welcome Section**
+
+Heading:
+
+"Let's Master Comparing Quantities!"
+
+Subheading:
+
+"You're doing great, keep going!"
+
+Include the friendly educational robot illustration with a supportive speech bubble.
+
+**Progress Section**
+
+Display:
+
+- Current learner level.
+- XP progress.
+- Overall mastery progress.
+- Completed KCs.
+- Locked KCs.
+- Learning journey.
+
+Use purple progress bars and yellow achievement indicators.
+
+**Knowledge Component Cards**
+
+Display the curriculum in the correct syllabus order.
+
+Each card should show:
+
+- KC name.
+- Short description.
+- Mastery percentage.
+- Progress bar.
+- Locked, in-progress, or completed status.
+
+Only unlock the next KC after the current KC reaches P(L) ≥ 0.80.
+
+Include a clear Resume Learning button.
+
+Also include a visible **Collect Log Data** button, as specified in Section 12.
+
+## Screen 3: Topic Introduction
+
+When a learner selects an unlocked KC:
+
+- Display the topic name.
+- Show learning objectives.
+- Show estimated session duration.
+- Display the Hook stage.
+- Provide a Start Learning button.
+
+## Screen 4: Exploration
+
+Display visual examples, images, and concept videos.
+
+Require an explicit acknowledgment before continuing.
+
+## Screen 5: Explanation
+
+Display structured explanations.
+
+Use:
+
+- Short paragraphs.
+- Illustrated examples.
+- Mathematical expressions.
+- Step-by-step calculations.
+- Highlighted important points.
+
+Include the gatekeeper MCQ.
+
+## Screen 6: Story
+
+Present an engaging recipe or map scenario.
+
+Use visuals and real-world context.
+
+## Screen 7: Adaptive Practice
+
+Follow the third uploaded reference screenshot closely.
+
+The layout should include:
+
+- Breadcrumb navigation.
+- Current KC and topic.
+- "Time to Practice!" heading.
+- Mastery progress.
+- Question progress indicators.
+- Central white rounded question card.
+- Question type label.
+- Question text.
+- Four answer options where applicable.
+- Hint button.
+- Check Answer button.
+- Previous navigation where applicable.
+- Exit/close control.
+
+The question card should be visually prominent and centred.
+
+Use purple for active progress and yellow for knowledge-check labels.
+
+When the learner submits an answer, display targeted feedback without navigating away unnecessarily.
+
+## Screen 8: Remediation
+
+Display:
+
+- Friendly explanation.
+- Misconception-specific feedback.
+- Remedial images.
+- Scaffolded question.
+- Continue button after successful completion.
+
+## Screen 9: Let's Review Modal
+
+Trigger after three consecutive incorrect answers.
+
+Display:
+
+"That's okay! Let's revisit this concept together."
+
+Provide:
+
+- Review Explanation button.
+- Resume Later option, if appropriate.
+- Preserved progress.
+
+The mandatory review must be completed before adaptive practice resumes.
+
+## Screen 10: Progress and Completion
+
+Display:
+
+- Total questions attempted.
+- Correct answers.
+- Mastery probability per KC.
+- Hints used.
+- Misconceptions identified.
+- Learning time.
+- XP earned.
+- Completed topics.
+
+Use friendly achievement indicators.
+
+Avoid making the learner feel judged by low scores.
+
+---
+
+# 11. TEN-MINUTE SESSION MANAGEMENT AND RESUME
+
+The 10-minute constraint must be enforced throughout the application.
+
+Design a complete learning sequence that fits within approximately 10 minutes.
+
+Suggested time allocation:
+
+| Activity | Target Time |
+|---|---:|
+| Hook | 30 seconds |
+| Exploration | 1 minute |
+| Explanation + Quick Check | 2 minutes |
+| Story | 1 minute |
+| Adaptive Practice | 4 minutes |
+| Feedback and Review | 1.5 minutes |
+
+Total: Approximately 10 minutes.
+
+These are target allocations, not reasons to abruptly interrupt a learner.
+
+The system must:
+
+- Display a session timer.
+- Track time spent on each stage.
+- Save progress after each interaction.
+- Save the current question and selected answer state where appropriate.
+- Save mastery values.
+- Save hint usage.
+- Save remediation state.
+- Resume the learner at the exact saved stage.
+- Preserve completed stages and activities.
+- Never force a learner to restart after leaving.
+
+If the learner reaches the session time limit, encourage them to pause and resume later.
+
+Do not force completion or discard unfinished work.
+
+---
+
+# 12. INTERACTION LOGGING AND COLLECT LOG DATA BUTTON
+
+This is a mandatory application feature.
+
+Implement an interaction logging system that records meaningful learner interactions.
+
+### 12.1 Events to Record
+
+Record:
+
+**Session Events**
+- Session started.
+- Session paused.
+- Session resumed.
+- Session completed.
+- Session duration.
+
+**Instructional Events**
+- Hook viewed.
+- Exploration viewed.
+- Acknowledgment clicked.
+- Explanation viewed.
+- Quick Check attempted.
+- Story viewed.
+- Practice started.
+
+**Question Events**
+- Question generated.
+- Question displayed.
+- Answer selected.
+- Answer submitted.
+- Correct or incorrect response.
+- Number of attempts.
+- Time taken to answer.
+- Difficulty level.
+- Question type.
+
+**Hint Events**
+- Hint requested.
+- Hint level.
+- Number of hints used.
+- Time of hint request.
+
+**Adaptive Events**
+- Difficulty increased.
+- Difficulty decreased.
+- Misconception detected.
+- Bug ID identified.
+- Remediation triggered.
+- Remediation completed.
+- Two-error safety net triggered.
+- Three-error intervention triggered.
+- Explanation review initiated.
+- KC mastery threshold reached.
+
+**Progress Events**
+- KC unlocked.
+- Topic completed.
+- Mastery updated.
+- Learner exited.
+- Learner resumed.
+
+### 12.2 Log Data Structure
+
+Store events in a structured JSON format.
+
+Each event should include fields such as:
+
+- event_id
+- learner_id
+- session_id
+- timestamp
+- event_type
+- chapter_id
+- kc_id
+- topic_id
+- question_id
+- question_type
+- difficulty
+- learner_response
+- correctness
+- hints_used
+- time_taken
+- mastery_before
+- mastery_after
+- misconception_id
+- system_action
+- event_details
+
+Fields that do not apply to an event may be null.
+
+Do not fabricate event data.
+
+### 12.3 Collect Log Data Button
+
+Add a clearly visible button named:
+
+**Collect Log Data**
+
+Place it on the Dashboard and also make it accessible from the Progress/Session Report screen.
+
+When clicked:
+
+1. Retrieve all available interaction logs for the current learner.
+2. Retrieve session-level information.
+3. Retrieve learner-model information.
+4. Retrieve BKT mastery values.
+5. Retrieve detected misconception history.
+6. Retrieve system adaptation decisions.
+7. Compile the information into a structured JSON file.
+8. Allow the user to download the JSON report.
+
+Use a descriptive filename such as:
+
+`YourRatio_25M1025_LearningLogs.json`
+
+The exported file should contain:
+
+- Learner ID.
+- Export timestamp.
+- Session history.
+- Question interaction history.
+- Correct and incorrect responses.
+- Hint usage.
+- Time-on-task.
+- Mastery progression.
+- Misconception frequency.
+- Adaptive decisions.
+- Remediation history.
+- Completion status.
+
+The exported JSON must be valid, readable, and machine-readable.
+
+Do not merely display a button that does nothing.
+
+If there is no interaction history, export an appropriately structured empty report rather than inventing records.
+
+### 12.4 Logging Reliability
+
+Use persistent storage for logs.
+
+Session-level temporary state must not be the only source of persistence.
+
+Use the configured backend/database for durable storage when available.
+
+Prevent accidental duplicate event recording.
+
+Maintain timestamps and session identifiers.
+
+The logging system must not interfere with the learning experience.
+
+---
+
+# 13. LEARNER ANALYTICS AND SESSION REPORT
+
+Provide a learner progress report that is separate from the learning interface.
+
+Include:
+
+**Mastery Analytics**
+- Mastery probability per KC.
+- Initial and current mastery.
+- Completed KCs.
+- Pending KCs.
+
+**Performance Analytics**
+- Total questions.
+- Correct answers.
+- Incorrect answers.
+- Accuracy.
+- Attempts per question.
+
+**Behavioural Analytics**
+- Time spent per activity.
+- Hint dependency ratio.
+- Average response time.
+- Session completion.
+- Number of pauses and resumes.
+
+**Cognitive Analytics**
+- Detected misconceptions.
+- Bug IDs.
+- Frequency of each misconception.
+- Remediation attempts.
+- Improvement after remediation.
+
+**Adaptive Decision Log**
+
+Display human-readable explanations of system decisions.
+
+Examples:
+
+- "Difficulty reduced because two consecutive answers were incorrect."
+- "A recipe-scaling misconception was detected."
+- "A scaffolded question was presented to strengthen understanding."
+- "The learner reached 80% mastery in this Knowledge Component."
+
+Provide JSON export through the Collect Log Data button.
+
+The report should make the system's decisions transparent to educators.
+
+---
+
+# 14. AI FUNCTIONALITY AND BACKEND INTEGRATION
+
+Keep the architecture modular.
+
+Separate:
+
+- Frontend.
+- Question generation service.
+- Answer evaluation service.
+- Misconception detection.
+- Learner model.
+- BKT engine.
+- Pedagogical decision engine.
+- Logging service.
+- Persistence layer.
+
+AI should be responsible for:
+
+1. Generating syllabus-aligned questions.
+2. Generating alternative explanations.
+3. Evaluating open-ended reasoning.
+4. Identifying likely misconceptions.
+5. Producing supportive feedback.
+6. Generating scaffolded questions.
+7. Suggesting the next appropriate learning activity.
+
+Use deterministic mathematical validation wherever possible.
+
+Do not rely entirely on an LLM for numerical correctness, mastery calculation, or progression decisions.
+
+The BKT engine and pedagogical rules must remain independently testable.
+
+Use fallback questions and prepared feedback if the AI service becomes unavailable.
+
+Do not allow AI-generated content to bypass syllabus restrictions or instructional sequencing.
+
+---
+
+# 15. PERSISTENCE AND AUTHENTICATION
+
+Implement learner-specific persistence.
+
+The system must support:
+
+- Learner identification.
+- Session creation.
+- Progress saving.
+- Mastery persistence.
+- Interaction logging.
+- Session resumption.
+- Question history.
+- Misconception history.
+
+Use the configured authentication and database services.
+
+If Firebase Firestore is used, organise the data into learner-specific collections/documents for:
+
+- Learner profiles.
+- KC mastery.
+- Sessions.
+- Interaction events.
+- Question history.
+- Misconception history.
+
+Use sessionStorage or equivalent temporary state for in-progress UI state, but never rely on sessionStorage alone for long-term progress.
+
+Returning learners must be able to continue their learning journey without losing previously recorded information.
+
+---
+
+# 16. LEARNING EVALUATION
+
+Evaluate learning using actual learner responses.
+
+The evaluation must cover:
+
+**Ratio Understanding**
+Can the learner represent and simplify ratios?
+
+**Recipe Proportion**
+Can the learner scale both ingredients using the same factor?
+
+**Map Scale**
+Can the learner calculate actual distances using a given map scale?
+
+**Reasoning**
+Can the learner explain why both quantities must change proportionally?
+
+Use the following target outcome from DESIGN.md:
+
+The learner should correctly solve at least 4 out of 5 practice questions, including:
+
+- At least one recipe question.
+- At least one map-scale question.
+- An explanation of the reasoning behind a proportion problem.
+
+This is an evaluation target, not a replacement for BKT mastery tracking.
+
+Do not mark a KC as mastered solely because the learner has achieved 4/5 accuracy.
+
+The mastery threshold remains P(L) ≥ 0.80.
+
+---
+
+# 17. IMPORTANT PEDAGOGICAL REQUIREMENTS
+
+The learner has already experienced failure.
+
+Therefore, the entire application must be designed around confidence-building and supportive learning.
+
+Use language such as:
+
+- "Good attempt!"
+- "Let's try another approach."
+- "You're getting closer."
+- "That's okay. Let's understand this step together."
+- "You are making progress."
+
+Avoid:
+
+- "You failed."
+- "Wrong again."
+- "You are weak."
+- "Poor performance."
+- Harsh red error screens.
+- Excessive score comparisons.
+- Unnecessary competitive leaderboards.
+
+The application should prioritise learning and understanding over speed.
+
+XP and levels may be used as motivational elements, but they must never become the primary measure of learning.
+
+---
+
+# 18. STRICT IMPLEMENTATION RULES
+
+These requirements must be followed throughout development.
+
+1. Strictly follow DESIGN.md.
+2. Follow the supplied System Design Report for the ITS architecture and pedagogical logic.
+3. Follow the supplied syllabus for curriculum content and ordering.
+4. Do not hardcode Class 7 as a universal learner restriction.
+5. Do not replace adaptive question generation with static quizzes.
+6. Do not use simple accuracy as a replacement for BKT.
+7. Do not allow learners to skip mandatory instructional stages.
+8. Do not allow learners to bypass mandatory remediation.
+9. Do not advance learners without the 80% mastery requirement.
+10. Implement the two-error safety net and three-error intervention.
+11. Maintain separate mastery values for each KC.
+12. Save progress after meaningful interactions.
+13. Implement exact resume functionality.
+14. Keep each learning sequence within the 10-minute design constraint.
+15. Implement the Collect Log Data button as a functional JSON export.
+16. Record the learner's meaningful interactions and system decisions.
+17. Validate all automatically generated numerical questions.
+18. Provide fallback content when AI services fail.
+19. Preserve the reference UI's colours, fonts, layout, spacing, and visual identity.
+20. Display Learner ID 25M1025 in the footer of every screen.
+
+Do not remove an important feature simply to make implementation easier.
+
+---
+
+# 19. EXPECTED FINAL APPLICATION
+
+The final product must be a fully functional adaptive tutoring application named **YourRatio**.
+
+It must provide:
+
+- A polished educational dashboard.
+- Syllabus-aligned curriculum.
+- Five-stage instructional sequence.
+- Automatic adaptive quiz generation.
+- Multiple question formats.
+- Bayesian Knowledge Tracing.
+- Dynamic difficulty adjustment.
+- Bug-based misconception detection.
+- Three-level hints.
+- Scaffolded remediation.
+- Three-error struggle intervention.
+- Ten-minute learning sessions.
+- Automatic progress saving.
+- Exact resume functionality.
+- Learner analytics.
+- Interaction logging.
+- Functional JSON log export.
+- Responsive UI matching the uploaded screenshots.
+
+**Final instruction:** Treat the original DESIGN.md as the primary educational specification, the System Design Report as the detailed architectural and pedagogical specification, the supplied syllabus as the source of truth for curriculum, and the uploaded screenshots as the source of truth for the visual design.
+
+Build the complete working application, not merely a visual prototype. All buttons, navigation, assessment interactions, adaptive decisions, persistence, and log collection must function correctly.
